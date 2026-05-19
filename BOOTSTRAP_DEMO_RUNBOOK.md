@@ -76,3 +76,23 @@ YAML
 ANSIBLE_ROLES_PATH=ansible/roles ansible-playbook -i local-deploy/inventory.ini /tmp/bootstrap_crypto_only.yml --vault-password-file ansible/.vault_pass -e bootstrap_crypto_enabled=true
 ansible-playbook -i local-deploy/inventory.ini ansible/playbook.yml --vault-password-file ansible/.vault_pass
 ```
+
+
+
+```
+  ansible -i local-deploy/inventory.ini storage -b -m shell -a "sudo -u postgres psql ticketing -c '\dt'"
+```
+  Dat toont de tabellen.
+
+  Daarna bijvoorbeeld users/events/reservaties bekijken:
+```
+  ansible -i local-deploy/inventory.ini storage -b -m shell -a "sudo -u postgres psql ticketing -c 'SELECT * FROM events LIMIT 5;'"
+
+  ansible -i local-deploy/inventory.ini storage -b -m shell -a "sudo -u postgres psql ticketing -c 'SELECT * FROM users LIMIT 5;'"
+
+  ansible -i local-deploy/inventory.ini storage -b -m shell -a "sudo -u postgres psql ticketing -c 'SELECT * FROM reservations LIMIT 5;'"
+```
+  Als je eerst niet weet hoe de tabellen exact heten:
+```
+  ansible -i local-deploy/inventory.ini storage -b -m shell -a "sudo -u postgres psql ticketing -c '\dt'"
+```
